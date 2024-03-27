@@ -583,6 +583,7 @@ class Table
      * @param  integer   $value
      * @return $this
      */
+    /*
     public function limit($value)
     {
         if (! is_null($value)) {
@@ -593,6 +594,24 @@ class Table
             }
         }
 
+        return $this;
+    }
+    */
+    public function limit($value)
+    {
+        if (! is_null($value)) {
+            if (! $this->db->getDriver()->useTop) {
+                $this->sqlLimit = ' LIMIT '.(int) $value;
+            }
+			// else {
+				// if ($value > 0)
+				// {
+					// $this->sqlLimit = ' TOP '.(int) $value;
+				// }
+			// }
+				
+        }
+		
         return $this;
     }
 
@@ -606,7 +625,12 @@ class Table
     public function offset($value)
     {
         if (! is_null($value) && is_int($value) && $value > 0) {
-            $this->sqlOffset = ' OFFSET '.(int) $value;
+            //$this->sqlOffset = ' OFFSET '.(int) $value;
+            if ($this->db->getDriver()->useTop) {
+				$this->sqlOffset = ' OFFSET '.(int) $value.' ROWS FETCH NEXT '.(int) $value.' ROWS ONLY';
+            } else {
+                $this->sqlOffset = ' OFFSET '.(int) $value;
+            }
         }
 
         return $this;
