@@ -40,7 +40,8 @@ jobs:
           APP_VERSION="main.${SHORT_SHA}"
           DOCKER_IMAGE=kanboard/kanboard
           DOCKER_VERSION=dev
-          if [ "${{ github.event_name }}" = "schedule" ]; then
+          #if [ "${{ github.event_name }}" = "schedule" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
           DOCKER_VERSION="nightly"
           TAGS="docker.io/${DOCKER_IMAGE}:${DOCKER_VERSION},ghcr.io/${DOCKER_IMAGE}:${DOCKER_VERSION},quay.io/${DOCKER_IMAGE}:${DOCKER_VERSION}"
           elif [[ $GITHUB_REF == refs/tags/* ]]; then
