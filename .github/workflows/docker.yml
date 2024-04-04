@@ -38,7 +38,8 @@ jobs:
         run: |
           SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
           APP_VERSION="main.${SHORT_SHA}"
-          DOCKER_IMAGE=kanboard/kanboard
+          #DOCKER_IMAGE=kanboard/kanboard
+          DOCKER_IMAGE=syratus/kanboard
           DOCKER_VERSION=dev
           #if [ "${{ github.event_name }}" = "schedule" ]; then
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
